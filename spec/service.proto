@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option go_package = "./spec";
+
+// The greeting service definition.
+service Service {
+  rpc Connect(ConnectRequest) returns (stream Command) {}
+  rpc Ping(PingRequestResponse) returns (PingRequestResponse) {}
+}
+
+message PingRequestResponse {
+  int32 n = 1;
+}
+
+message ConnectRequest {
+  string token = 1;
+  string service_name = 2;
+  bool private = 3;
+}
+
+enum Type {
+  OPEN = 0;
+}
+
+message Command {
+  Type kind = 1;
+}
