@@ -1,0 +1,26 @@
+name: Sdk
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+    - name: Push to GitHub Packages
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: cmd/Dockerfile
+        push: true
+        tags: |
+          ghcr.io/pinge-link/sdk

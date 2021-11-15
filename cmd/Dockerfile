@@ -17,7 +17,7 @@ COPY . .
 RUN CGO_ENABLED=0 go test -v
 
 # Build the Go app
-RUN go build -o ./out/app ./client/cmd
+RUN go build -o ./out/app ./cmd
 
 # Start fresh from a smaller image
 FROM alpine:3.9 
