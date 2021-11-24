@@ -7,7 +7,7 @@ release:
     name: sdk
 
 builds:
-  - binary: sdk
+  - binary: pinge-agent
     goos:
       - darwin
       - windows
