@@ -35,6 +35,7 @@ type Client struct {
 	token           string
 	private         bool
 	serviceName     string
+	customDomain    string
 	topologyAddress string
 	region          *TopologyRegion
 	ctx             context.Context
@@ -63,6 +64,12 @@ func WithInitHost(host string) ClientOption {
 func WithPrivate() ClientOption {
 	return func(c *Client) {
 		c.private = true
+	}
+}
+
+func WithCustomDomain(domain string) ClientOption {
+	return func(c *Client) {
+		c.customDomain = domain
 	}
 }
 
@@ -173,9 +180,10 @@ func (c *Client) initPrimary() error {
 	gateClient := spec.NewServiceClient(conn)
 
 	stream, err := gateClient.Connect(c.ctx, &spec.ConnectRequest{
-		Token:       c.token,
-		ServiceName: c.serviceName,
-		Private:     c.private,
+		Token:        c.token,
+		ServiceName:  c.serviceName,
+		Private:      c.private,
+		CustomDomain: c.customDomain,
 	})
 	if err != nil {
 		return err
