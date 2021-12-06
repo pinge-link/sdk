@@ -39,6 +39,7 @@ type Client struct {
 	topologyAddress string
 	region          *TopologyRegion
 	ctx             context.Context
+	uri             string
 }
 
 type ClientOption func(*Client)
@@ -241,6 +242,10 @@ func (c *Client) initPrimary() error {
 				}
 
 				c.accepter <- secondConn
+			case spec.Type_SET_INFO:
+				c.uri = resp.ProjectUri
+
+				fmt.Printf("Service URL: https://%s\r\n", resp.ProjectUri)
 			}
 		}
 	}()
