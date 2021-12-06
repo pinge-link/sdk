@@ -90,7 +90,7 @@ func InitClient(ctx context.Context, serviceName string, token string, options .
 
 	topology, err := c.getTopology()
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cannot get topology: %w", err)
 	}
 
 	region, err := c.selectRegion(topology)

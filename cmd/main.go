@@ -55,6 +55,10 @@ func main() {
 		}
 	}
 
+	if *initHost == "" {
+		*initHost = os.Getenv("PINGE_TOPOLOGY_HOST")
+	}
+
 	var options []client.ClientOption
 
 	if *host != "" {
@@ -63,6 +67,10 @@ func main() {
 
 	if *private {
 		options = append(options, client.WithPrivate())
+	}
+
+	if *initHost != "" {
+		options = append(options, client.WithTopologyAddress(*initHost))
 	}
 
 	if *command != "" {

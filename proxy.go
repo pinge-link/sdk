@@ -35,6 +35,7 @@ func InitService(ctx context.Context, serviceName string, token string, host str
 
 			g.Go(func() error {
 				io.Copy(conn, localConn)
+				conn.Close()
 				return nil
 			})
 
