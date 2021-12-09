@@ -74,6 +74,7 @@ func startContainer(dockerSockPath string, token string, container DockerContain
 	pingeService := container.Labels["pingeService"]
 	pingePort := container.Labels["pingePort"]
 	pingeContainerPort := container.Labels["pingeContainerPort"]
+	pingeCustomDomain := container.Labels["pingeCustomDomain"]
 	_, pingePrivate := container.Labels["pingePrivate"]
 
 	if pingePort == "" && pingeContainerPort == "" {
@@ -123,6 +124,10 @@ func startContainer(dockerSockPath string, token string, container DockerContain
 
 		if pingePrivate {
 			options = append(options, WithPrivate())
+		}
+
+		if pingeCustomDomain != "" {
+			options = append(options, WithCustomDomain(pingeCustomDomain))
 		}
 
 		return InitService(ctx, pingeService, token, host, port, options)

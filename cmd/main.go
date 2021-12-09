@@ -21,6 +21,7 @@ func main() {
 	command := flag.String("command", "", "specify command for run")
 	private := flag.Bool("private", false, "access to service by token")
 	docker := flag.Bool("docker", false, "scan docker containers and pinge labels")
+	customDomain := flag.String("custom-domain", "", "specify custom domain for service")
 
 	flag.Parse()
 
@@ -71,6 +72,10 @@ func main() {
 
 	if *initHost != "" {
 		options = append(options, client.WithTopologyAddress(*initHost))
+	}
+
+	if *customDomain != "" {
+		options = append(options, client.WithCustomDomain(*customDomain))
 	}
 
 	if *command != "" {
